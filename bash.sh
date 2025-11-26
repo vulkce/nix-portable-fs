@@ -33,4 +33,6 @@ mount /dev/disk/by-label/BOOT /mnt/boot
 
 # Montar home
 mount -o noatime /dev/disk/by-label/home /mnt/home
+
+git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/
 ```
