@@ -7,7 +7,7 @@
    # configura como um sistema efêmero
    ./ephemeral/ephemeral.nix
    ./ephemeral/persist.nix
-   ./ephemeral/subvolume.nix
+   ../subvolume.nix
    
    # configuração do sistema
    ./system/basic.nix
