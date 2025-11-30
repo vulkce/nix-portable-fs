@@ -10,7 +10,8 @@
     fastfetch
     obs-studio
     gnome-disk-utility
-    
+    protonvpn-gui
+
     # non-free
     unrar
     
@@ -20,6 +21,8 @@
     rustc
     nodejs
     devspace
+    sqlitebrowser
+    jetbrains.idea-community
 
     # coisas para WMs & DEs
     alacritty

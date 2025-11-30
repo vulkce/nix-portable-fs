@@ -12,7 +12,7 @@
   services.desktopManager.plasma6.enable = true;
 
   # COSMIC
-  services.desktopManager.cosmic.enable = false;
+  services.desktopManager.cosmic.enable = true;
 
   # GNOME
   services.desktopManager.gnome.enable = false;
