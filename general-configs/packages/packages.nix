@@ -54,6 +54,7 @@
   services.flatpak.packages = [
     { appId = "app.zen_browser.zen"; origin = "flathub"; }
               "org.vinegarhq.Sober"
+              "net.newpipe.NewPipe"
   ];
 
   # atualização automática:
