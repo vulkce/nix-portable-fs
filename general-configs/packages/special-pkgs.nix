@@ -28,7 +28,7 @@
       "steam-unwrapped"
       "steam-run"
 
-  ];
+    ];
 
 # de acordo com a wiki, ativar o gamescope manualmente não é preciso em GPUs amd!!! :)
 
