@@ -12,23 +12,22 @@
 
 # -------- STEAM --------
 
-    programs.steam = {
-      enable = true;
+#    programs.steam = {
+#      enable = true;
 
       # opções necessárias para jogos onlines
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
-    };
+#      remotePlay.openFirewall = true;
+#      dedicatedServer.openFirewall = true;
+#      localNetworkGameTransfers.openFirewall = true;
+#    };
 
     # instala pacotes essenciais para a steam
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "steam"
-      "steam-original"
-      "steam-unwrapped"
-      "steam-run"
-
-    ];
+#    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+#      "steam"
+#      "steam-original"
+#      "steam-unwrapped"
+#      "steam-run"
+#    ];
 
 # de acordo com a wiki, ativar o gamescope manualmente não é preciso em GPUs amd!!! :)
 
@@ -101,7 +100,6 @@
 
     # needed if you use swap
 #    kubelet.extraOpts = "--fail-swap-on=false";
-
 #  };
 
 # -------- NH --------
