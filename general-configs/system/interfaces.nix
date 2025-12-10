@@ -15,7 +15,7 @@
 
 # -------- DEs --------
 
-  services  = { 
+  services = { 
     # WAYLAND
     desktopManager = { 
       plasma6.enable = false; # plasma
