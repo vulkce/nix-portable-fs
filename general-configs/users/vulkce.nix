@@ -2,12 +2,10 @@
 
   users.users.vulkce = {
     isNormalUser = true;
+    createHome = false;
     home = "/home/vulkce"; 
     hashedPasswordFile = "/persist/passwords/vulkce";
     extraGroups = [ "wheel" "networkmanager" "vboxusers" "docker"];
-    
-    # Se o /home não estiver montado, cria um temporário
-    createHome = true;
     
     # pacotes do usuário
     packages = with pkgs; [
