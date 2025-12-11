@@ -5,7 +5,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=root" "compress=zstd" "noatime" ];
+    options = [ "subvol=root" "noatime" ];
   };
 
   fileSystems."/nix" = {
@@ -24,7 +24,7 @@
   fileSystems."/var/log" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=var_log" "compress=zstd" "noatime" ];
+    options = [ "subvol=var_log" "noatime" ];
     neededForBoot = true;
   };
 
@@ -34,15 +34,37 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
-  # Home em disco separado
-  fileSystems."/home" = {
-    device = "/dev/disk/by-label/home";
-    fsType = "xfs";
-    options = [
-      "noatime"
-      "nofail" # não falha o boot se não encontrar
-      "x-systemd.device-timeout=5" # timeout curto!
-    ];
+# -------- TempHome --------
+
+  specialisation = {
+    Home = {
+      inheritParentConfig = true;
+      system.nixos.tags = [ "Home" ]
+      # home separada
+      fileSystems."/home" = {
+        device = "/dev/disk/by-label/home";
+        fsType = "xfs";
+        options = [ "noatime" "nofail" "x-systemd.device-timeout=5" ];
+      };
+    };
+    TempHome = {
+      inheritParentConfig = true;
+      system.nixos.tags = [ "TempHome" ]
+      # home interna
+      fileSystems."/home" = {
+        device = "none"; 
+        fsType = "tmpfs"; # filesystem temporário na ram
+        options = [ "size=8G" "mode=777" ]; # options para o tmpfs
+      };
+      # usa systemd para criar uma home
+      systemd.tmpfiles.settings."10-home-vulkce" = {
+        "/home/vulkce".d = {
+          mode = "0755";
+          user = "vulkce";
+          group = "users";
+        };
+      };
+    };
   };
 
 # -------- PERSIST --------
