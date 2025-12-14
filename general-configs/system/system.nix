@@ -113,6 +113,6 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # habilita suporte ao openZFS
-#  networking.hostId = "8bec9fba";
-#  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "8bec9fba";
+  boot.supportedFilesystems = [ "zfs" ];
 }
