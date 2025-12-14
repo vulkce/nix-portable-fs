@@ -42,6 +42,21 @@
     allowedUDPPorts = [ ];
   };
 
+  nix = {
+    optimise = { # otimiza o /nix/store trocando arquivos duplicados por hardlinks
+      automatic = true;
+      dates = [ "daily" ]; # otimiza diariamente
+    };
+    gc = { # chama o caminhão de lixo pro nix
+      automatic = false;
+      dates = [ "weekly" ]; # chama semanalmente
+    };
+    settings = { # configura o uso de várias threads
+      max-jobs = "auto"; # usa todos os cores
+      cores = 0; # distribui a carga
+    };
+  };
+
   # timezone
   time.timeZone = "America/Sao_Paulo";
 
@@ -54,7 +69,7 @@
   # versão no qual a primeira build foi feita!
   system.stateVersion = "25.11";
 
-# -------- OPTIMIZATION --------
+# -------- HARDWARE --------
 
   # define o perfil de energia como performace
   powerManagement = {
@@ -66,18 +81,6 @@
     "amd_pstate=active" # o hardware controla
     # "isolcpus=<cpus>" # isola cores.
   ];
-
-  # otimiza o /nix/store trocando arquivos duplicados por hardlinks
-  nix.optimise = {
-    automatic = true;
-    dates = [ "daily" ]; # otimiza diariamente
-  };
-
-  # chama o caminhão de lixo pro nix
-  nix.gc = {
-    automatic = false;
-    dates = [ "weekly" ]; # chama semanalmente
-  };
 
   # habilita zram
   zramSwap = {
@@ -96,11 +99,6 @@
     };
   };
 
-  nix.settings = {
-    max-jobs = "auto"; # usa todos os cores
-    cores = 0; # distribui a carga
-  };
-
   # swap normal
 #  swapDevices = [
 #    {
@@ -108,8 +106,6 @@
 #      priority = 0; # usa o swap quando a zram encher
 #    }
 #  ];
-
-# -------- HARDWARE --------
 
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
