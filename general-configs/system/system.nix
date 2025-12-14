@@ -11,16 +11,13 @@
     zfs.removeLinuxDRM = true; # protege o zfs caso futuras atts de kernels quebrem o zfs por conta da GPL
   };
 
-  # timezone
-  time.timeZone = "America/Sao_Paulo";
-  
   # nome do sistema
   networking = {
     hostName = "flake"; # configura o hostname 
     hostId = "8bec9fba"; # configura o hostId para o zfs
     networkmanager.enable = true; # usa o networkmanager
   };
-  
+
   # pipewire
   services.pipewire = {
     enable = true;
@@ -44,6 +41,9 @@
     allowedTCPPorts = [ 80 4580 9090 ];
     allowedUDPPorts = [ ];
   };
+
+  # timezone
+  time.timeZone = "America/Sao_Paulo";
 
   # experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
