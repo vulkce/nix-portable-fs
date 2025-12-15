@@ -27,6 +27,22 @@
     initrd.kernelModules = [ 
       "dm-snapshot" 
     ];
+    # configura comando pós post para raiz efêmera com zfs
+    initrd.systemd = {
+      enable = true;
+      services.initrd-rollback-root = {
+        after = [ "zfs-import-rpool.service" ];
+        wantedBy = [ "initrd.target" ];
+        before = [ "sysroot.mount" ];
+        path = [ pkgs.zfs ];
+        description = "Rollback para SnapShot em branco";
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        script = ''
+          zfs rollback -r rpool/local/root@blank
+        '';
+      };
+    };
     loader.systemd-boot.enable = true; # usa systemd-boot
     # zfs
     supportedFilesystems = [ "zfs" ]; # filesystems extras
