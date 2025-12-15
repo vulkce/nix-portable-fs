@@ -4,27 +4,27 @@
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
-    fsType = "btrfs";
-    options = [ "subvol=root" "noatime" ];
+    fsType = "zfs";
+  #  options = [ "subvol=root" "noatime" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/nixos";
-    fsType = "btrfs";
-    options = [ "subvol=nix" "compress=zstd" "noatime" ];
+    fsType = "zfs";
+  #  options = [ "subvol=nix" "compress=zstd" "noatime" ];
   };
 
   fileSystems."/persist" = {
     device = "/dev/disk/by-label/nixos";
-    fsType = "btrfs";
-    options = [ "subvol=persist" "compress=zstd" "noatime" ];
+    fsType = "zfs";
+  #  options = [ "subvol=persist" "compress=zstd" "noatime" ];
     neededForBoot = true;
   };
 
   fileSystems."/var/log" = {
     device = "/dev/disk/by-label/nixos";
-    fsType = "btrfs";
-    options = [ "subvol=var_log" "noatime" ];
+    fsType = "zfs";
+  #  options = [ "subvol=var_log" "noatime" ];
     neededForBoot = true;
   };
 
