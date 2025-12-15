@@ -3,7 +3,6 @@
 # -------- SYSTEM --------
 
   environment.systemPackages = with pkgs; [
-
     # coisas úteis
     usbutils
     wget
