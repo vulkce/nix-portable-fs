@@ -8,9 +8,9 @@
 
     programs.git = {
       enable = true;
-      userName = "vulkce";
-      userEmail = "vulkce@proton.me";
-
+      settings = {
+        user.name = "vulkce";
+        user.email = "vulkce@proton.me";
+      };
     };
-
 }
