@@ -22,9 +22,6 @@ done
 
 if [ "$fstype" = "1" ]; then
 
-  # muda nas configurações para btrfs
-  sed -i '5c\   ./filesystems/btrfs.nix # importa o filesystem' /persist/general-configs/system/system.nix
-
   # -------- BTRFS --------
   mkfs.btrfs -L nixos $unidade
 
@@ -56,15 +53,15 @@ if [ "$fstype" = "1" ]; then
   # Montar home
   mount -o noatime /dev/disk/by-label/home /mnt/home # é necessário ter uma home já
 
+  # muda nas configurações para btrfs
+  sed -i '5c\   ./filesystems/btrfs.nix # importa o filesystem' /mnt/persist/general-configs/system.nix
+
   git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/
 
 else
 
   # -------- ZFS --------
   # estou usando atualmente
-
-  # muda nas configurações para zfs
-  sed -i '5c\   ./filesystems/zfs.nix # importa o filesystem' /persist/general-configs/system/system.nix
 
   zpool create -f -o ashift=12 nixos $unidade # ashift=12 é bom para SSDs
 
@@ -92,6 +89,9 @@ else
   zfs snapshot nixos/system/root@blank # cria uma snapshot vazia do root
 
   zfs set acltype=posixacl nixos/system # define as permissões do ZFS como POSIX
+
+  # muda nas configurações para zfs
+  sed -i '5c\   ./filesystems/zfs.nix # importa o filesystem' /mnt/persist/general-configs/system.nix
 
   git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/
 
