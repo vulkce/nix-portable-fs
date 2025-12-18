@@ -1,9 +1,4 @@
 { config, lib, pkgs, modulesPath, ... }: {
- 
-  imports = [ 
-    (modulesPath + "/installer/scan/not-detected.nix") # importa configurações de hardware não detectadas 
-    ./filesystems/zfs.nix # importa o filesystem
-  ];
 
 # -------- NIXOS --------
 
