@@ -65,10 +65,10 @@ if [ "$fstype" = "1" ]; then
   # Montar home
   mount -o noatime /dev/disk/by-label/home /mnt/home # é necessário ter uma home já
 
+  git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/ # clona as configs
+
   # muda nas configurações para btrfs
   sed -i '5c\   ./filesystems/btrfs.nix # importa o filesystem' /mnt/persist/general-configs/system.nix
-
-  git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/
 
 else
 
@@ -102,10 +102,10 @@ else
 
   zfs set acltype=posixacl nixos/system # define as permissões do ZFS como POSIX
 
+  git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/ # clona as configs
+
   # muda nas configurações para zfs
   sed -i '5c\   ./filesystems/zfs.nix # importa o filesystem' /mnt/persist/general-configs/system.nix
-
-  git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/
 
 fi
 
