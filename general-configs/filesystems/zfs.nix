@@ -23,7 +23,7 @@
       };
     };
   };
-
+  # particionamento
   fileSystems = {
     "/" = {
       device = "nixos/system/root";

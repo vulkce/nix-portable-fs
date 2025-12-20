@@ -42,11 +42,29 @@
       inheritParentConfig = true; # herda a configuração pai
       configuration = {
         system.nixos.tags = [ "Home" ]; # define as tags no boot
+        # Logs na ram
+        services.journald.extraConfig = ''
+          Storage = volatile
+          RuntimeMaxUse = 128M
+        '';
         # home separada
-        fileSystems."/home" = {
-          device = "/dev/disk/by-label/home";
-          fsType = "xfs";
-          options = [ "noatime" "nofail" "x-systemd.device-timeout=5" ];
+        fileSystems = {
+          "/home" = {
+            device = "/dev/disk/by-label/home";
+            fsType = "xfs";
+            options = [ "mode=0755" "noatime" "nofail" "nodiratime" "x-systemd.device-timeout=5" ];
+          };
+          # cache na ram
+          "/home/vulkce/.cache" = {
+            device = "none";
+            fsType = "tmpfs";
+            options = [ "defaults" "mode=0755" "size=512M" ];
+          };
+          "/home/vulkce/Downloads/" = {
+            device = "none";
+            fsType = "tmpfs";
+            options = [ "defaults" "mode=0755" "size=1GB" ];
+          };
         };
       };
     };
