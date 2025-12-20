@@ -17,7 +17,7 @@ while [ "$resp" = "n" ]; do
   echo "unidade digitada: $unidade"
   echo "você deseja criar uma home? (s/n)"
   read home
-  if [ "$home" = "s"]; then
+  if [ "$home" = "s" ]; then
     echo "digite o filesystem da home [ ext4, xfs, btrfs ]"
     read homeFS
     echo "qual a unidade que a home vai ser instalada? (/dev/sdX)"
