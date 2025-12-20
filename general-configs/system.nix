@@ -81,10 +81,14 @@
   };
 
   # timezone
-  time.timeZone = "America/Sao_Paulo";
+  time = {
+    timeZone = "America/Sao_Paulo";
+  };
   
   # versão no qual a primeira build foi feita!
-  system.stateVersion = "26.05";
+  system = {
+    stateVersion = "26.05";
+  };
 
 # -------- USERS --------
 
