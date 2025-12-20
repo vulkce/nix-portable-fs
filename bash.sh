@@ -24,7 +24,7 @@ while [ "$resp" = "n" ]; do
     echo "lembre-se, não deve ser a mesma unidade do sistema!"
     read homeU
     mkfs.$homeFS -L home $homeU
-    sed -i "47c\          fsType = \"$homeFS\";" /mnt/persist/general-configs/default.nix
+    sed -i "54c\          fsType = \"$homeFS\";" /mnt/persist/general-configs/default.nix
   fi
   echo "tem certeza? (s/n)"
   read resp
