@@ -67,7 +67,7 @@ if [ "$fstype" = "1" ]; then
   git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/ # clona as configs
 
   # muda nas configurações para btrfs
-  sed -i '5c\   ./filesystems/btrfs.nix # importa o filesystem' /mnt/persist/general-configs/default.nix
+  sed -i '5c\   ./filesystems/btrfs.nix # importa o filesystem' /mnt/persist/general-configs/system.nix
 
 else
 
@@ -104,7 +104,7 @@ else
   git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/persist/ # clona as configs
 
   # muda nas configurações para zfs
-  sed -i '5c\   ./filesystems/zfs.nix # importa o filesystem' /mnt/persist/general-configs/default.nix
+  sed -i '5c\   ./filesystems/zfs.nix # importa o filesystem' /mnt/persist/general-configs/system.nix
 
 fi
 
