@@ -3,16 +3,16 @@
   services = {
     # LOGIN_MANAGER
     displayManager = {
-      cosmic-greeter.enable = true; # cosmic greeter
+      cosmic-greeter.enable = false; # cosmic greeter
       sddm = { # SDDM
-        enable = false;
-        wayland.enable = false;
+        enable = true;
+        wayland.enable = true;
       };
     };
     # WAYLAND
     desktopManager = { # DEs
-      plasma6.enable = false; # plasma
-      cosmic.enable = true; # cosmic
+      plasma6.enable = true; # plasma
+      cosmic.enable = false; # cosmic
       gnome.enable = false; # gnome
     };
     # xserver
