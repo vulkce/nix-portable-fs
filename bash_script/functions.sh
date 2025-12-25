@@ -54,8 +54,11 @@
 
 	makeHome() {
 		if [[ -n "$home_fs" ]]; then
-			wipefs -a $home_disk
-			parted $home_disk mklabel gpt
+
+			if [[ "$home_fs" != "tmpfs" ]]; then
+  				wipefs -a $home_disk
+				parted $home_disk mklabel gpt
+			fi
 			
 			# muda nas configuracoes para o fs da home escolhido
 			sed -i "19c\  fsHome = \"$home_fs\";" /mnt/git/general-configs/filesystems/definition.nix
