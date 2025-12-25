@@ -60,9 +60,12 @@
 
 	case $resp2 in
 		s|sim)
-			home_disk=$(unidade "qual a unidade que a home vai ser instalada? (/dev/sdX) ")
 			echo "FileSystems: [ ext4, xfs, btrfs, f2fs, zfs, tmpfs ]"
 			home_fs=$(ask_choice "Digite o filesystem da home " ext4 xfs btrfs f2fs zfs tmpfs)
+			
+			if [[ "$home_fs" != "tmpfs" ]]; then
+  				home_disk=$(unidade "qual a unidade que a home vai ser instalada? (/dev/sdX) ")
+			fi
 			;;
 		n|nao)
 			;;
