@@ -104,7 +104,7 @@
 				;;
 			f2fs|ext4|xfs)
 				sed -i '9c\  fsBackend = "common";' /mnt/git/general-configs/filesystems/definition.nix
-				sed -i "18c\  fsRoot = \"$root_fs\";" /mnt/git/general-configs/filesystems/definition.nix
+				sed -i "18c\  fsRoot = \"$system_fs\";" /mnt/git/general-configs/filesystems/definition.nix
 				;;
 			tmpfs)
 				sed -i "9c\  fsBackend = \"$system_fs\";" /mnt/git/general-configs/filesystems/definition.nix
