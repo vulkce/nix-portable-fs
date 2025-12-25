@@ -66,11 +66,11 @@
 			case $home_fs in
 				ext4|xfs|btrfs)
 					mkfs.$home_fs -L home -f $home_disk # cria a home com as opcoes escolhidas
-					mount -o noatime /dev/disk/by-label/home /mnt/home # monta a home
+					mount -o noatime $home_disk /mnt/home # monta a home
 					;;
 				f2fs)
 					mkfs.$home_fs -l home -f $home_disk # cria a home com as opcoes escolhidas
-					mount -o noatime /dev/disk/by-label/home /mnt/home # monta a home
+					mount -o noatime $home_disk /mnt/home # monta a home
 					;;
 				zfs)
 					zpool create -f -o ashift=12 home $home_disk # cria um pool
