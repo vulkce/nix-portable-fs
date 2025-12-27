@@ -11,7 +11,7 @@
       prismlauncher
       vscodium
       gnome-secrets
-      jetbrains.idea-community
+      jetbrains.idea
       protonvpn-gui
       obs-studio
     ];

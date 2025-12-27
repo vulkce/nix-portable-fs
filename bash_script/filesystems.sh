@@ -21,7 +21,7 @@
             mount -o subvol=root,noatime ${system_disk}2 /mnt
 
             # cria os diretórios no liveCD 
-            mkdir -p /mnt/{nix,safe,boot,home,git}
+            mkdir -p /mnt/{nix,safe,boot,home,nix/git}
 
             # Montar outros subvolumes do sistema
             mount -o subvol=nix,noatime ${system_disk}2 /mnt/nix
@@ -48,7 +48,7 @@
 
             # monta os datasets
             mount -t zfs nixos/system/root /mnt
-            mkdir -p /mnt/{nix,safe,boot,home,git}
+            mkdir -p /mnt/{nix,safe,boot,home,nix/git}
             mount -t zfs nixos/system/nix /mnt/nix
             mount -t zfs nixos/system/safe /mnt/safe
 
@@ -72,7 +72,7 @@
 
             mount ${system_disk}2 /mnt
 
-            mkdir -p /mnt/{nix/safe/system,boot,home,git}
+            mkdir -p /mnt/{nix/safe/system,boot,home,nix/git}
 
             install # executa a instalacao
             ;;
@@ -84,7 +84,7 @@
 
             mount ${system_disk}2 /mnt
 
-            mkdir -p /mnt/{nix,boot,home,git}
+            mkdir -p /mnt/{nix,boot,home,nix/git}
             
             install # executa a instalacao
             ;;
@@ -96,7 +96,7 @@
 
             mount ${system_disk}2 /mnt
 
-            mkdir -p /mnt/{nix,boot,home,git}
+            mkdir -p /mnt/{nix,boot,home,nix/git}
             
             install # executa a instalacao
             ;;

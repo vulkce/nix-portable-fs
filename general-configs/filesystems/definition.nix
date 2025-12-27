@@ -2,7 +2,7 @@
 
 let
   # =========================
-  # seleciona o FS
+  #     seleciona o FS
   # =========================
   
   # btrfs | zfs | tmpfs | common
@@ -13,15 +13,13 @@ let
   tmpfs  = false;
 
   # =========================
-  # filesystems
+  #       filesystems
   # =========================
   fsRoot = "";
   fsHome = "";
 
-  commonOpts = [ "noatime" ];
-
   # =========================
-  # Devices - MEOW
+  #     Devices - MEOW
   # =========================
   homeDevice =
     if zfsH then "home/user"
@@ -31,7 +29,7 @@ let
   rootDevice = "/dev/disk/by-label/nixos";
 
   # =========================
-  # Base comum (merge)
+  #   Base comum (merge)
   # =========================
   baseFileSystems = {
     "/" = {
@@ -40,87 +38,27 @@ let
   };
 
   # =========================
-  # Persistence
-  # =========================
-  tmpfsConfig =
-    if tmpfs then {
-      persistence."/nix/safe/system" = {
-        enable = true;
-        hideMounts = true;
-
-        directories = [
-          "/etc/nixos"
-          "/var/lib/flatpak"
-          "/var/lib/nixos"
-          "/var/lib/nixos-containers"
-          "/var/lib/systemd/coredump"
-          "/var/lib/bluetooth"
-          "/etc/NetworkManager/system-connections"
-        ];
-
-        files = [
-          "/etc/machine-id"
-        ];
-      };
-    }
-
-    else if tmpfsH then {
-      persistence."/nix/safe/home" = {
-        enable = true;
-        hideMounts = true;
-
-        users.vulkce = {
-          directories = [
-            ".cache/nix"
-            ".local/share/nix"
-            ".ssh"
-            "Desktop"
-            "Documents"
-            "Music"
-            "Pictures"
-            "Projects"
-            "Public"
-            "Templates"
-            "Videos"
-            ".config"
-            ".local/share/flatpak"
-            ".local/share/PrismLauncher"
-            ".var"
-            "passwords"
-          ];
-
-          files = [
-            ".env"
-            ".gitconfig"
-          ];
-        };
-      };
-    }
-
-    else {};
-
-  # =========================
-  # Backends - MEOW!
+  #     Backends - MEOW!
   # =========================
   backends = {
     btrfs = {
       "/" = {
         device  = rootDevice;
         fsType  = "btrfs";
-        options = commonOpts ++ [ "subvol=root" ];
+        options = [ "noatime" "subvol=root" ];
       };
 
       "/nix" = {
         device  = rootDevice;
         fsType  = "btrfs";
-        options = commonOpts ++ [ "subvol=nix" ];
+        options = [ "noatime" "subvol=nix" ];
       };
 
       "/safe" = {
         device  = rootDevice;
         fsType  = "btrfs";
         neededForBoot = true;
-        options = commonOpts ++ [ "subvol=safe" ] [ "compress=lz4" ];
+        options = [ "noatime" "subvol=safe" "compress=lz4" ];
       };
     };
 
@@ -128,20 +66,17 @@ let
       "/" = {
         device  = "nixos/system/root";
         fsType  = "zfs";
-        options = commonOpts;
       };
 
       "/nix" = {
         device  = "nixos/system/nix";
         fsType  = "zfs";
-        options = commonOpts;
       };
 
       "/safe" = {
         device  = "nixos/system/safe";
         fsType  = "zfs";
         neededForBoot = true;
-        options = commonOpts ++ [ "compress=lz4" ];
       };
     };
 
@@ -155,7 +90,7 @@ let
       "/nix" = {
         device  = rootDevice;
         fsType  = fsRoot;
-        options = commonOpts;
+        options = [ "noatime" ];
       };
     };
 
@@ -163,13 +98,13 @@ let
       "/" = {
         device  = rootDevice;
         fsType  = fsRoot;
-        options = commonOpts;
+        options = [ "noatime" ];
       };
     };
   };
 
   # =========================
-  # merge final!
+  #       merge final!
   # =========================
   fileSystemsConfig =
     lib.recursiveUpdate baseFileSystems backends.${fsBackend};
@@ -177,14 +112,62 @@ let
 in
 {
   fileSystems = fileSystemsConfig;
-  environment = tmpfsConfig;
 
+  # complementos opcionais
   imports = [
   
   ];
 
   # =========================
-  # Specialisations
+  #       Persistence
+  # =========================
+  environment.persistence = lib.mkIf tmpfs {
+    "/nix/safe/system" = {
+      enable = true;
+      hideMounts = true;
+
+      directories = [
+        "/git"
+        "/etc/nixos"
+        "/var/lib/flatpak"
+        "/var/lib/nixos"
+        "/var/lib/nixos-containers"
+        "/var/lib/systemd/coredump"
+        "/var/lib/bluetooth"
+        "/etc/NetworkManager/system-connections"
+      ];
+      files = [ "/etc/machine-id" ];
+    };
+  } // lib.mkIf tmpfsH {
+    "/nix/safe/home" = {
+      enable = true;
+      hideMounts = true;
+
+      users.vulkce = {
+        directories = [
+          ".cache/nix"
+          ".ssh"
+          "Desktop"
+          "Pictures"
+          "Projects"
+          "Videos"
+          ".config"
+          ".local/share"
+          ".var"
+          ".nix-defexpr"
+          ".pki"
+        ];
+        files = [ 
+          ".gitconfig" 
+          ".env"
+          ".gtkrc-2.0"
+          ];
+      };
+    };
+  };
+
+  # =========================
+  #     Specialisations
   # =========================
   specialisation = {
     Home = {
@@ -196,7 +179,7 @@ in
         fileSystems."/home" = {
           device  = homeDevice;
           fsType  = fsHome;
-          options = [ "nofail" "x-systemd.device-timeout=5" ] ++ commonOpts;
+          options = [ "noatime" "nofail" "x-systemd.device-timeout=5" ];
         };
       };
     };

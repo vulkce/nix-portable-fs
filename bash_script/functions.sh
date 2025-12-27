@@ -118,7 +118,7 @@
 	
 	install() {
 		# clona as configs
-		git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/git/
+		git clone https://github.com/vulkce/ephemeral-dotfiles-nix.git /mnt/nix/git/
 		
 		case $system_fs in
 			btrfs|zfs)
@@ -126,7 +126,7 @@
 
 				case $resp_ephemeral in
 					s|sim)
-    					sed -i "183c\    ./ephemeral/$system_fs.nix" $file;;
+    					sed -i "118c\    ./ephemeral/$system_fs.nix" $file;;
 				esac
 				;;
 			f2fs|ext4|xfs)
@@ -159,7 +159,7 @@
 
 		# instala o sistema
 		warn "agora voce pode instalar o sistema!"
-		success "nixos-install --flake /mnt/git#flake"
+		success "sudo nixos-install --flake /mnt/nix/git#flake"
 
 		return 0
 	}

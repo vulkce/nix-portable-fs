@@ -19,7 +19,7 @@
 	RESET="\e[0m"
 
 	# esse sera um arquivo imutavel
-	file="/mnt/git/general-configs/filesystems/definition.nix"
+	file="/mnt/nix/git/general-configs/filesystems/definition.nix"
 	
 	set -euo pipefail # define a seguranca do script
 
@@ -36,10 +36,11 @@
 	info " comente o packages.nix na flake para uma instalação limpa!"
 	info " caso ja possua uma home sera necessario montar manualmente!"
 	info " NUNCA USE A MESMA UNIDADE PARA O SISTEMA E HOME!!!"
+	info " lembre-se de colocar sua senha em /mnt/nix/ antes de instalar!"
 	warn " -------------------------------------"
 	
 	# interacao inicial
-	warn "F2FS ESTA MARCADO COMO INSTAVEL, USAR ELE SERA POR SUA CONTA E RISCO!"
+	warn "F2FS ESTA MARCADO GERALMENTE E INSTAVEL, USAR ELE SERA POR SUA CONTA E RISCO!"
 	info "FileSystems: [ ext4, xfs, btrfs, f2fs, zfs, tmpfs ]"
 	# passa parametros para dentro de funcoes, evitando repeticoes no codigo
 	system_fs=$(ask_choice "qual o filesystem para o sistema? " ext4 xfs btrfs f2fs zfs tmpfs)

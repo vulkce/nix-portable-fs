@@ -3,17 +3,17 @@
   services = {
     # LOGIN_MANAGER
     displayManager = {
-      cosmic-greeter.enable = false; # cosmic greeter
+      cosmic-greeter.enable = true; # cosmic greeter
       sddm = { # SDDM
-        enable = true;
-        wayland.enable = true;
+        enable = false;
+        wayland.enable = false;
       };
     };
     # WAYLAND
     desktopManager = { # DEs
-      plasma6.enable = true; # plasma
+      plasma6.enable = false; # plasma
       cosmic.enable = false; # cosmic
-      gnome.enable = false; # gnome
+      gnome.enable = true; # gnome
     };
     # xserver
     xserver = {
@@ -36,6 +36,12 @@
       enable = true;
       xwayland.enable = true;
     };      
+  };
+
+  # corrigir problema com teclas mortas no gnome
+  i18n.inputMethod = {
+    enable = true;
+    type = "ibus";
   }; 
 
 # -------- EXCLUDE --------
