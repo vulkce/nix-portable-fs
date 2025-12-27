@@ -82,41 +82,37 @@
 	}
 
 	makeHome() {
-		case $resp2 in
-			s|sim)
-				if [[ "$home_fs" != "tmpfs" ]]; then
-					wipefs -a $home_disk
-					parted $home_disk mklabel gpt
-				fi
-				
-				# muda nas configuracoes para o fs da home escolhido
-				sed -i "19c\  fsHome = \"$home_fs\";" $file
+		if [[ "$home_fs" != "tmpfs" ]]; then
+			wipefs -a $home_disk
+			parted $home_disk mklabel gpt
+		fi
+		
+		# muda nas configuracoes para o fs da home escolhido
+		sed -i "19c\  fsHome = \"$home_fs\";" $file
 
-				case $home_fs in
-					ext4|xfs|btrfs)
-						mkfs.$home_fs -L home -f $home_disk # cria a home com as opcoes escolhidas
-						mount -o noatime $home_disk /mnt/home # monta a home
-						;;
-					f2fs)
-						mkfs.$home_fs -l home -f $home_disk # cria a home com as opcoes escolhidas
-						mount -o noatime $home_disk /mnt/home # monta a home
-						;;
-					zfs)
-						zpool create -f -o ashift=12 home $home_disk # cria um pool
-						zfs create -o mountpoint=legacy home/user # cria um dataset
-						mount -t zfs home/user /mnt/home # monta o dataset
-						sed -i '11c\  zfsH = true;' $file
-						;;
-					tmpfs)
-						mkdir -p /mnt/nix/safe/home
-						sed -i '12c\  tmpfsH = true;' $file
-						;;
-					*) 
-						error "ocorreu um erro ao tentar encontrar o filesystem '$home_fs' em '$home_disk'" 
-						exit 2
-						;;
-				esac
-			;;
+		case $home_fs in
+			ext4|xfs|btrfs)
+				mkfs.$home_fs -L home -f $home_disk # cria a home com as opcoes escolhidas
+				mount -o noatime $home_disk /mnt/home # monta a home
+				;;
+			f2fs)
+				mkfs.$home_fs -l home -f $home_disk # cria a home com as opcoes escolhidas
+				mount -o noatime $home_disk /mnt/home # monta a home
+				;;
+			zfs)
+				zpool create -f -o ashift=12 home $home_disk # cria um pool
+				zfs create -o mountpoint=legacy home/user # cria um dataset
+				mount -t zfs home/user /mnt/home # monta o dataset
+				sed -i '11c\  zfsH = true;' $file
+				;;
+			tmpfs)
+				mkdir -p /mnt/nix/safe/home
+				sed -i '12c\  tmpfsH = true;' $file
+				;;
+			*) 
+				error "ocorreu um erro ao tentar encontrar o filesystem '$home_fs' em '$home_disk'" 
+				exit 2
+				;;
 		esac
 	}
 	
@@ -153,7 +149,10 @@
 				;;
 		esac
 
-		makeHome
+		case $resp2 in
+			s|sim)
+				makeHome;;
+		esac
 
 		# monta o boot
 		mount /dev/disk/by-label/BOOT /mnt/boot
