@@ -61,19 +61,19 @@
 
 	boot() {
 		# reconstroi o disco com gpt
-		wipefs -a $system_disk && \
-		parted $system_disk mklabel gpt && \
+		wipefs -a $system_disk
+		parted $system_disk mklabel gpt
 		
 		# cria particao de 1GB para boot
-		parted -a optimal $system_disk mkpart primary 0% 1GB && \
+		parted -a optimal $system_disk mkpart primary 0% 1GB
 		
 		# formata a particao de boot para fat32
-		mkfs.fat -F 32 -n BOOT ${system_disk}1 && \
+		mkfs.fat -F 32 -n BOOT ${system_disk}1
 		sync
 		
 		# flags de para particao boot
-		parted $system_disk set 1 esp on && \
-		parted $system_disk set 1 boot on && \
+		parted $system_disk set 1 esp on
+		parted $system_disk set 1 boot on
 
 		# cria a  segunda particao usando o restante do disco
 		parted -a optimal $system_disk mkpart primary 1GB 100%
@@ -94,21 +94,21 @@
 
 				case $home_fs in
 					ext4|xfs|btrfs)
-						mkfs.$home_fs -L home -f $home_disk && \  # cria a home com as opcoes escolhidas
+						mkfs.$home_fs -L home -f $home_disk # cria a home com as opcoes escolhidas
 						mount -o noatime $home_disk /mnt/home # monta a home
 						;;
 					f2fs)
-						mkfs.$home_fs -l home -f $home_disk && \  # cria a home com as opcoes escolhidas
+						mkfs.$home_fs -l home -f $home_disk # cria a home com as opcoes escolhidas
 						mount -o noatime $home_disk /mnt/home # monta a home
 						;;
 					zfs)
-						zpool create -f -o ashift=12 home $home_disk && \  # cria um pool
-						zfs create -o mountpoint=legacy home/user && \  # cria um dataset
-						mount -t zfs home/user /mnt/home && \ # monta o dataset
+						zpool create -f -o ashift=12 home $home_disk # cria um pool
+						zfs create -o mountpoint=legacy home/user # cria um dataset
+						mount -t zfs home/user /mnt/home # monta o dataset
 						sed -i '11c\  zfsH = true;' $file
 						;;
 					tmpfs)
-						mkdir -p /mnt/nix/safe/home && \
+						mkdir -p /mnt/nix/safe/home
 						sed -i '12c\  tmpfsH = true;' $file
 						;;
 					*) 

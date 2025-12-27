@@ -36,34 +36,23 @@
 	warn " -------------------------------------"
 	
 	# interacao inicial
-	while true; do
-		info "FileSystems: [ ext4, xfs, btrfs, f2fs, zfs, tmpfs ]"
-		warn "F2FS ESTA MARCADO COMO INSTAVEL, USAR ELE SERA POR SUA CONTA E RISCO!"
-		# passa parametros para dentro de funcoes, evitando repeticoes no codigo
-		system_fs=$(ask_choice "qual o filesystem para o sistema? " ext4 xfs btrfs f2fs zfs tmpfs)
-		system_disk=$(unidade "diga a unidade no qual o sistema vai ser instalado (/dev/sdX) " system) 
+	info "FileSystems: [ ext4, xfs, btrfs, f2fs, zfs, tmpfs ]"
+	warn "F2FS ESTA MARCADO COMO INSTAVEL, USAR ELE SERA POR SUA CONTA E RISCO!"
+	# passa parametros para dentro de funcoes, evitando repeticoes no codigo
+	system_fs=$(ask_choice "qual o filesystem para o sistema? " ext4 xfs btrfs f2fs zfs tmpfs)
+	system_disk=$(unidade "diga a unidade no qual o sistema vai ser instalado (/dev/sdX) " system) 
 
-		case $system_fs in
-			tmpfs)
-				printf "---------------------------------------\n"
-				info "FileSystems: [ ext4, xfs, btrfs, f2fs ]"
-				root_fs=$(ask_choice "no tmpfs e necessario definir um FileSystem comum para o persist " ext4 xfs btrfs f2fs )
-				;;
-			btrfs|zfs)
-				resp_ephemeral=$(ask_choice "voce deseja ativar o root efemero?: (s/n) " s n sim nao)
-				;;
-			f2fs|ext4|xfs)
-				;;
-		esac
-		resp=$(ask_choice "Tem certeza? (s/n) " s n sim nao)
-
-		case $resp in 
-			s|sim)
-				break;;
-			n|nao)
-				;;
-		esac
-	done
+	case $system_fs in
+		tmpfs)
+			info "FileSystems: [ ext4, xfs, btrfs, f2fs ]"
+			root_fs=$(ask_choice "no tmpfs e necessario definir um FileSystem comum para o persist " ext4 xfs btrfs f2fs )
+			;;
+		btrfs|zfs)
+			resp_ephemeral=$(ask_choice "voce deseja ativar o root efemero?: (s/n) " s n sim nao)
+			;;
+		f2fs|ext4|xfs)
+			;;
+	esac
 	
 	clear
 
@@ -84,25 +73,21 @@
 
 	clear
 
-	while true; do
-		warn " -------ALTERACOES-------" 
-		info " DISCO DA HOME:    $home_disk"
-		info " FS DA HOME:       $home_fs"
-		info " DISCO DO SISTEMA: $system_disk"
-		info " FS DO SISTEMA:    $system_fs"
-		warn " ------------------------"
+	warn " -------ALTERACOES-------" 
+	info " DISCO DA HOME:    $home_disk"
+	info " FS DA HOME:       $home_fs"
+	info " DISCO DO SISTEMA: $system_disk"
+	info " FS DO SISTEMA:    $system_fs"
+	warn " ------------------------"
 
-		read -p "deseja continuar, abortar ou mudar algo? (continue/abort) " resp3
+	resp3=$(ask_choice "deseja continuar ou abortar? (continue/abort) " continue abort)
 
-		case "${resp3,,}" in
-			abort)
-				success "operacao encerrada pelo usuario"; exit 130;;
-			continue)
-				break;;
-			*)
-				error "opcao invalida";;
-		esac
-	done
+	case "${resp3,,}" in
+		abort)
+			success "operacao encerrada pelo usuario"; exit 130;;
+		continue)
+			break;;
+	esac
 
 	clear
 	
