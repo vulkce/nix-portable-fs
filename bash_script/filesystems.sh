@@ -82,11 +82,9 @@
             case $system_fs in
                 f2fs)
                     mkfs.f2fs -l nixos -f ${system_disk}2
-                    sync
                     ;;
                 *)
                     mkfs.$system_fs -L nixos -f ${system_disk}2
-                    sync
                     ;;
             esac
             sync

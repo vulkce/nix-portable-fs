@@ -104,6 +104,7 @@
 				zfs create -o mountpoint=legacy home/user # cria um dataset
 				mount -t zfs home/user /mnt/home # monta o dataset
 				sed -i '13c\  zfsH = true;' $file
+				warn ("LEMBRE-SE DE EXPORTAR O POOL ZFS NO TEMPHOME!")
 				;;
 			tmpfs)
 				mkdir -p /mnt/nix/safe/home
