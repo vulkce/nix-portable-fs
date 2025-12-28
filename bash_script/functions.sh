@@ -152,8 +152,7 @@
 		esac
 
 		case $resp2 in
-			s|sim)
-				makeHome;;
+			s|sim) makeHome;;
 		esac
 
 		# monta o boot
