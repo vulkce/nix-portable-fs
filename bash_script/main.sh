@@ -40,7 +40,7 @@
 	warn " -------------------------------------"
 	
 	# interacao inicial
-	warn "F2FS ESTA MARCADO GERALMENTE E INSTAVEL, USAR ELE SERA POR SUA CONTA E RISCO!"
+	warn "F2FS E INSTAVEL, USAR ELE SERA POR SUA CONTA E RISCO!"
 	info "FileSystems: [ ext4, xfs, btrfs, f2fs, zfs, tmpfs ]"
 	# passa parametros para dentro de funcoes, evitando repeticoes no codigo
 	system_fs=$(ask_choice "qual o filesystem para o sistema? " ext4 xfs btrfs f2fs zfs tmpfs)

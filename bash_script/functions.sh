@@ -88,7 +88,7 @@
 		fi
 		
 		# muda nas configuracoes para o fs da home escolhido
-		sed -i "19c\  fsHome = \"$home_fs\";" $file
+		sed -i "18c\  fsHome = \"$home_fs\";" $file
 
 		case $home_fs in
 			ext4|xfs|btrfs)
@@ -100,14 +100,17 @@
 				mount -o noatime $home_disk /mnt/home # monta a home
 				;;
 			zfs)
-				zpool create -f -o ashift=12 home $home_disk # cria um pool
+				zpool create -f -o ashift=12 -m none home $home_disk # cria um pool
 				zfs create -o mountpoint=legacy home/user # cria um dataset
 				mount -t zfs home/user /mnt/home # monta o dataset
-				sed -i '11c\  zfsH = true;' $file
+				sed -i '13c\  zfsH = true;' $file
 				;;
 			tmpfs)
 				mkdir -p /mnt/nix/safe/home
-				sed -i '12c\  tmpfsH = true;' $file
+				sed -i \
+					-e "118c\    ./ephemeral/tmpfsH.nix" \
+					-e "14c\  tmpfsH = true;" \
+				"$file"
 				;;
 			*) 
 				error "ocorreu um erro ao tentar encontrar o filesystem '$home_fs' em '$home_disk'" 
@@ -122,24 +125,23 @@
 		
 		case $system_fs in
 			btrfs|zfs)
-				sed -i "9c\  fsBackend = \"$system_fs\";" $file
+				sed -i "10c\  fsBackend = \"$system_fs\";" $file
 
 				case $resp_ephemeral in
-					s|sim)
-    					sed -i "118c\    ./ephemeral/$system_fs.nix" $file;;
+					s|sim) sed -i "117c\    ./ephemeral/$system_fs.nix" $file;;
 				esac
 				;;
 			f2fs|ext4|xfs)
 				sed -i \
-					-e "9c\  fsBackend = \"common\";" \
-					-e "18c\  fsRoot = \"$system_fs\";" \
+					-e "10c\  fsBackend = \"common\";" \
+					-e "17c\  fsRoot = \"$system_fs\";" \
 				"$file"
 				;;
 			tmpfs)
 				sed -i \
-					-e "9c\  fsBackend = \"$system_fs\";" \
-					-e "18c\  fsRoot = \"$root_fs\";" \
-					-e "13c\  tmpfs = true;" \
+					-e "10c\  fsBackend = \"$system_fs\";" \
+					-e "17c\  fsRoot = \"$root_fs\";" \
+					-e "117c\    ./ephemeral/tmpfs.nix" \
 				"$file"
 				;;
 			*)

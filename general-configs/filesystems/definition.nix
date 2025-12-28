@@ -1,22 +1,21 @@
 { config, lib, pkgs, ... }:
 
-let
-  # =========================
-  #     seleciona o FS
-  # =========================
-  
+# =========================
+#        ARQUIVO
+#        IMUTAVEL
+# =========================
+
+let  
   # btrfs | zfs | tmpfs | common
   fsBackend = "";
 
-  zfsH   = false;
-  tmpfsH = false;
-  tmpfs  = false;
+  # non-common
+  zfsH   = false; # zfs na home
+  tmpfsH = false; # tmpfs na home
 
-  # =========================
-  #       filesystems
-  # =========================
-  fsRoot = "";
-  fsHome = "";
+  # common
+  fsRoot = ""; # fs do root
+  fsHome = ""; # fs da Home
 
   # =========================
   #     Devices - MEOW
@@ -113,58 +112,11 @@ in
 {
   fileSystems = fileSystemsConfig;
 
-  # complementos opcionais
+  # complementos
   imports = [
   
+  
   ];
-
-  # =========================
-  #       Persistence
-  # =========================
-  environment.persistence = lib.mkIf tmpfs {
-    "/nix/safe/system" = {
-      enable = true;
-      hideMounts = true;
-
-      directories = [
-        "/git"
-        "/etc/nixos"
-        "/var/lib/flatpak"
-        "/var/lib/nixos"
-        "/var/lib/nixos-containers"
-        "/var/lib/systemd/coredump"
-        "/var/lib/bluetooth"
-        "/etc/NetworkManager/system-connections"
-      ];
-      files = [ "/etc/machine-id" ];
-    };
-  } // lib.mkIf tmpfsH {
-    "/nix/safe/home" = {
-      enable = true;
-      hideMounts = true;
-
-      users.vulkce = {
-        directories = [
-          ".cache/nix"
-          ".ssh"
-          "Desktop"
-          "Pictures"
-          "Projects"
-          "Videos"
-          ".config"
-          ".local/share"
-          ".var"
-          ".nix-defexpr"
-          ".pki"
-        ];
-        files = [ 
-          ".gitconfig" 
-          ".env"
-          ".gtkrc-2.0"
-          ];
-      };
-    };
-  };
 
   # =========================
   #     Specialisations

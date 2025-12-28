@@ -28,6 +28,7 @@
 	environment.persistence."/safe" = {
 		enable = true;
 		hideMounts = true;
+
 		directories = [
 		  "/etc/nixos"
 		  "/var/lib/flatpak"
