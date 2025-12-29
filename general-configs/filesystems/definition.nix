@@ -31,6 +31,12 @@ let
   #   Base comum (merge)
   # =========================
   baseFileSystems = {
+    "/boot" = {
+      device = "/dev/disk/by-label/BOOT";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
     "/" = {
       neededForBoot = true;
     };

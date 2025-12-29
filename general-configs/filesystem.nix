@@ -7,11 +7,6 @@
 # -------- FILESYSTEM --------
 
   fileSystems = { 
-  	"/boot" = { # NUNCA TOCAR
-      device = "/dev/disk/by-label/BOOT";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
     # Userspace
     "/home/vulkce/Documents/etc1" = {
       device = "/dev/disk/by-uuid/2896792c-503e-4e52-bbd6-05fc5ae67675";
