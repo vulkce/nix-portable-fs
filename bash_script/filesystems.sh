@@ -62,10 +62,8 @@
             # Define FS e diretorios
             if [[ "$system_fs" != "tmpfs" ]]; then
                 fs="$system_fs"
-                mkdir -p "/mnt/{nix,boot,home,nix/git}"
             else
                 fs="$root_fs"
-                mkdir -p /mnt/{nix/safe/system,boot,home,nix/git}
             fi
 
             # Formatação
@@ -81,6 +79,9 @@
             sync
 
             mount -t "$fs" "${system_disk}2" /mnt
+
+            # 'safe' se torna obsoleto fora do tmpfs, mas evita o uso de eval ou de duplicar arrays no codigo!
+            mkdir -p /mnt/{nix/safe/system,boot,home,nix/git}
 
             install # executa a instalacao
             ;;
