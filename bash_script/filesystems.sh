@@ -81,7 +81,7 @@
             mount -t "$fs" "${system_disk}2" /mnt
 
             # 'safe' se torna obsoleto fora do tmpfs, mas evita o uso de eval ou de duplicar arrays no codigo!
-            mkdir -p /mnt/{nix/safe/system,boot,home,nix/git}
+            mkdir -p /mnt/{nix,safe,boot,hosme,nix/git}
 
             install # executa a instalacao
             ;;

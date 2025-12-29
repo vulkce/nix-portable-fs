@@ -107,9 +107,9 @@
 				warn "LEMBRE-SE DE EXPORTAR O POOL ZFS NO TEMPHOME!"
 				;;
 			tmpfs)
-				mkdir -p /mnt/nix/safe/home
+				mkdir -p /mnt/safeH
 				sed -i \
-					-e "118c\    ./ephemeral/tmpfsH.nix" \
+					-e "118c\    (import ./ephemeral/tmpfsH.nix { inherit fsHome; })" \
 					-e "14c\  tmpfsH = true;" \
 				"$file"
 				;;
@@ -142,7 +142,7 @@
 				sed -i \
 					-e "10c\  fsBackend = \"$system_fs\";" \
 					-e "17c\  fsRoot = \"$root_fs\";" \
-					-e "117c\    ./ephemeral/tmpfs.nix" \
+					-e "117c\    (import ./ephemeral/tmpfs.nix { inherit fsRoot; })" \
 				"$file"
 				;;
 			*)

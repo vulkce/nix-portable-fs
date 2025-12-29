@@ -1,6 +1,19 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, fsHome ... }: 
 
-  environment.persistence."/nix/safe/home" = {
+let 
+	fs = fsHome;
+in
+
+{
+  fileSystems = { 
+  	"/safeH" = { 
+      device = "/dev/disk/by-label/nixos";
+      fsType = fs;
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+	};
+
+  environment.persistence."/safeH" = {
     enable = true;
     hideMounts = true;
 

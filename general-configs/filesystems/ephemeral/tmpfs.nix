@@ -1,6 +1,19 @@
-{ config, lib, pkgs, ... }: {
-  
-  environment.persistence."/nix/safe/system"  = {
+{ config, lib, pkgs, fsRoot ... }: 
+
+let 
+	fs = fsRoot;
+in
+
+{
+	fileSystems = { 
+  	"/safe" = { 
+      device = "/dev/disk/by-label/nixos";
+      fsType = fs;
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+	};
+
+  environment.persistence."/safe"  = {
 		enable = true;
 		hideMounts = true;
     
