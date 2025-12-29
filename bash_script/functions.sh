@@ -109,7 +109,7 @@
 			tmpfs)
 				mkdir -p /mnt/safeH
 				sed -i \
-					-e "118c\    (import ./ephemeral/tmpfsH.nix { inherit fsHome; })" \
+					-e "118c\    (import ./ephemeral/tmpfsH.nix { inherit config lib pkgs fsHome; })" \
 					-e "14c\  tmpfsH = true;" \
 				"$file"
 				;;
@@ -142,7 +142,7 @@
 				sed -i \
 					-e "10c\  fsBackend = \"$system_fs\";" \
 					-e "17c\  fsRoot = \"$root_fs\";" \
-					-e "117c\    (import ./ephemeral/tmpfs.nix { inherit fsRoot; })" \
+					-e "117c\    (import ./ephemeral/tmpfs.nix { inherit config lib pkgs fsRoot; })" \
 				"$file"
 				;;
 			*)
