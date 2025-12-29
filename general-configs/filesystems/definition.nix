@@ -83,20 +83,20 @@ let
       "/" = {
         device  = "none";
         fsType  = "tmpfs";
-        options = [ "size=4G" "mode=755" ];
+        options = [ "defaults" "size=25%" "mode=755" ];
       };
 
       "/nix" = {
         device  = rootDevice;
-        fsType  = fsRoot;
-        options = [ "noatime" ];
+        fsType  = "btrfs";
+        options = [ "noatime" "subvol=nix" ];
       };
       
-      "/persist" = {
+      "/safe" = {
         device  = rootDevice;
-        fsType  = fsRoot;
+        fsType  = "btrfs";
         neededForBoot = true;
-        options = [ "noatime" ];
+        options = [ "noatime" "subvol=safe" ];
       };
     };
 

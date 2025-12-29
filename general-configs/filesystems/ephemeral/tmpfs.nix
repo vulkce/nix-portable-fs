@@ -1,19 +1,4 @@
 { config, lib, pkgs, ... }: {
-	
-  fileSystems = { 
-    "/safe" = { 
-      device = "/persist/safe";
-      fsType = "none";
-      options = [ "bind" ];
-      depends = [ "/persist" ];
-      neededForBoot = true;
-    };
-  };
-  
-  # Cria o diretório safe
-  systemd.tmpfiles.rules = [
-    "d /persist/safe 0755 root root -"
-  ];
 
   environment.persistence."/safe"  = {
 		enable = true;

@@ -1,21 +1,6 @@
 { config, lib, pkgs, ... }: {
 
-  fileSystems = { 
-    "/safeH" = { 
-      device = "/persist/safeH";
-      fsType = "none";
-      options = [ "bind" ];
-      depends = [ "/persist" ];
-      neededForBoot = true;
-    };
-  };
-  
-  # cria o diretório safeH
-  systemd.tmpfiles.rules = [
-    "d /persist/safeH 0755 root root -"
-  ];
-
-  environment.persistence."/safeH" = {
+  environment.persistence."/safe" = {
     enable = true;
     hideMounts = true;
 
