@@ -56,42 +56,33 @@
             
             install # executa a instalacao
             ;;		
-        tmpfs)
+        ext4|xfs|f2fs|tmpfs)
             boot # constroi o boot
 
-            case $root_fs in
+            # Define FS e diretorios
+            if [[ "$system_fs" != "tmpfs" ]]; then
+                fs="$system_fs"
+                dirs="/mnt/{nix,boot,home,nix/git}"
+            else
+                fs="$root_fs"
+                dirs="/mnt/{nix/safe/system,boot,home,nix/git}"
+            fi
+
+            # Formatação
+            case "$fs" in
                 f2fs)
-                    mkfs.f2fs -l nixos -f ${system_disk}2
+                    mkfs.f2fs -l nixos -f "${system_disk}2"
                     ;;
                 *)
-                    mkfs.$root_fs -L nixos -f ${system_disk}2
+                    mkfs."$fs" -L nixos -f "${system_disk}2"
                     ;;
             esac
+
             sync
 
-            mount -t $root_fs ${system_disk}2 /mnt
+            mount -t "$fs" "${system_disk}2" /mnt
+            mkdir -p $dirs
 
-            mkdir -p /mnt/{nix/safe/system,boot,home,nix/git}
-
-            install # executa a instalacao
-            ;;
-        ext4|xfs|f2fs)
-            boot # constroi o boot
-
-            case $system_fs in
-                f2fs)
-                    mkfs.f2fs -l nixos -f ${system_disk}2
-                    ;;
-                *)
-                    mkfs.$system_fs -L nixos -f ${system_disk}2
-                    ;;
-            esac
-            sync
-
-            mount -t $system_fs ${system_disk}2 /mnt
-
-            mkdir -p /mnt/{nix,boot,home,nix/git}
-            
             install # executa a instalacao
             ;;
         *)
