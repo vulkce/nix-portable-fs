@@ -1,5 +1,13 @@
 { config, lib, pkgs, ... }: {
 
+  systemd.tmpfiles.settings."10-home-vulkce" = {
+    "/home/vulkce".d = {
+      mode  = "0755";
+      user  = "vulkce";
+      group = "users";
+    };
+  };
+
   environment.persistence."/safe" = {
     enable = true;
     hideMounts = true;
