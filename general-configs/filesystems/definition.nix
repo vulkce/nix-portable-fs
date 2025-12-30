@@ -63,7 +63,7 @@ let
         device  = rootDevice;
         fsType  = "btrfs";
         neededForBoot = true;
-        options = [ "noatime" "subvol=safe" "compress=lz4" ];
+        options = [ "noatime" "subvol=safe" ];
       };
     };
 
