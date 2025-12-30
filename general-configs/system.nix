@@ -92,14 +92,6 @@
     extraGroups = [ "wheel" "networkmanager" "vboxusers" "docker" ];
   };
 
-  systemd.tmpfiles.settings."10-home-vulkce" = {
-    "/home/vulkce".d = {
-      mode  = "0755";
-      user  = "vulkce";
-      group = "users";
-    };
-  };
-
 # -------- HARDWARE --------
 
   # define o perfil de energia como performace
