@@ -141,7 +141,6 @@
 			tmpfs)
 				sed -i \
 					-e "10c\  fsBackend = \"$system_fs\";" \
-					-e "17c\  fsRoot = \"$root_fs\";" \
 					-e "117c\    ./ephemeral/tmpfs.nix" \
 				"$file"
 				;;
