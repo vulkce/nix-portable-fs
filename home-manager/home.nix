@@ -46,10 +46,6 @@
         appId = "app.zen_browser.zen"; 
         origin = "flathub"; 
       }
-      { 
-        appId = "org.vinegarhq.Sober";
-        origin = "flathub";
-      }
       {
         appId = "net.newpipe.NewPipe";
         origin = "flathub";
