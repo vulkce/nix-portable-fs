@@ -17,16 +17,18 @@
       "amd_pstate=active" # o hardware controla
       # "isolcpus=<cpus>" # isola cores.
     ];
-    initrd.availableKernelModules = [ 
-      "xhci_pci" 
-      "ahci" 
-      "usbhid" 
-      "usb_storage" 
-      "sd_mod" 
-    ];
-    initrd.kernelModules = [ 
-      "dm-snapshot" 
-    ];
+    initrd = {
+      availableKernelModules = [ 
+        "xhci_pci" 
+        "ahci" 
+        "usbhid" 
+        "usb_storage" 
+        "sd_mod" 
+      ];
+      kernelModules = [ 
+        "dm-snapshot" 
+      ];
+    };
     loader.systemd-boot.enable = true; # usa systemd-boot
   };
 
