@@ -60,14 +60,11 @@
             boot # constroi o boot
 
             # Formatação
-            case "$fs" in
-                f2fs)
-                    mkfs.f2fs -l nixos -f "${system_disk}2"
-                    ;;
-                *)
-                    mkfs."$system_fs" -L nixos -f "${system_disk}2"
-                    ;;
-            esac
+            if [ "$system_fs" = "f2fs" ]; then
+                mkfs.f2fs -l nixos -f "${system_disk}2"
+            else
+                mkfs."$system_fs" -L nixos -f "${system_disk}2"
+            fi
 
             sync
 
